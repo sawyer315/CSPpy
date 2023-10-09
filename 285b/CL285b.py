@@ -16,8 +16,8 @@ class Salesperson:
          self.comm = self.sales * 0.095
     else:
          self.comm = 3500 * 0.095 + (self.sales-3500) * 0.12
-def __str__(self):
-  return f"{self.id}  {self.code}  ${self.sales2f}  ${self.comm2f}"
+  def __str__(self):
+    return f"{self.id}  {self.code}  ${self.sales}  ${self.comm}"
           
 
   
