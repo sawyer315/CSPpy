@@ -109,6 +109,11 @@ for i in range(0, 20):
 print("Sum: ", sum)
 
 #17
-temp = [0] * 21
-for i in range(0, 20):
-  
+
+las = bigArray[19]
+temp = list(bigArray)
+temp.pop(19)
+temp.insert(0, las)
+
+print("Original: ", bigArray)
+print("\nShifted: ", temp)
