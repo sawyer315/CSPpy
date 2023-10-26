@@ -10,9 +10,24 @@ for item in nums:
     if char.isdigit():
       nums_final.append(int(char))
 
-print(sum(nums_final))
-totient_nums = []
-for i in range(0, len(nums_final)//2):
-  totient_nums.append((nums_final[i]^(nums_final[i + 1] - 1)) * (nums_final[i] - 1))
+print(nums_final)
+nums_final.append([0]*6)
 
-print(totient_nums)
+if len(nums_final) > 1:
+  num1 = (nums_final[0] ** (nums_final[1] - 1)) * (nums_final[0] - 1)
+  print(num1, " ")
+  final = num1
+  if len(nums_final) > 3:
+    num2 = (nums_final[2] ** (nums_final[3] - 1)) * (nums_final[2] - 1)
+    print(num2, " ")
+    final *= num2
+    if len(nums_final) > 5:
+      num3 = (nums_final[4] ** (nums_final[5] - 1)) * (nums_final[4] - 1)
+      print(num3, " ")
+      final *= num3
+      if len(nums_final) > 7:
+        num4 = (nums_final[6] ** (nums_final[7] - 1)) * (nums_final[6] - 1)
+        print(num4, " ")
+        final *= num4
+
+print("Answer: ", final)
