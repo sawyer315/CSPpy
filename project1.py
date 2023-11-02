@@ -7,22 +7,22 @@ questions = []
 answers = []
 randNum = 0
 response = 0
-difficulty = int(input("Difficulty -> 1 or 2"))
-startLen = int(input("How many questions?"))
-
-orderList = range(1, startLen)
+difficulty = int(input("Difficulty -> 1 or 2? "))
+startLen = int(input("How many questions? "))
+orderList = []
+for i in range(1, startLen+1):
+  orderList.append(i)
 randC = 0
 randPartA = 0
 randPartB = 0
-
 def makeQuestion(diff):
   if diff == 2:
     randC = random.randint(1, 5)
   else:
     randC = random.randint(1, 2)
 
-  randPartA = 0
-  randPartB = 0
+  randPartA = 3
+  randPartB = 2
   output = ""
   if randC == 1:
     randPartA = random.randint(10, 100)
@@ -56,29 +56,32 @@ def makeQuestion(diff):
     questions.append(output)
     answers.append(randPartA ** randPartB)
 
-
-for i in range(0, startLen - 1):
+for i in range(0, startLen):
   makeQuestion(difficulty)
 
+tempList = []
+for i in range(0, startLen - 1):
+  tempRand = random.randint(0, len(orderList) - 1)
+  tempList.append(orderList[tempRand])
+  orderList.pop(tempRand)
 
+tempList += orderList
+orderList = tempList
 
-def randOrder(*args):
-  
+streak = 0
 
-  
-randOrder(orderList)
-
-while qNum <= startLen:
-  
+for qNum in range(1, startLen + 1):
   print("Q", qNum)
-  print(questions[qNum - 1])
+  temp = orderList[qNum - 1]
+  print(questions[temp - 1])
   response = int(input())
-  if response == answers[qNum - 1]:
-    score += 2
+  if response == answers[temp - 1]:
+    streak += 1
+    score += 1 + (streak - 1)
     print("Correct")
-    print("Score: ", score)
+    print("Score: ", score, "\n")
   else:
+    streak = 0
     score -= 1
     print("Incorrect")
-    print("Score: ", score)
-  qNum += 1 
+    print("Score: ", score, "\n")
