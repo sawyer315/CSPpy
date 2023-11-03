@@ -1,38 +1,30 @@
-file = open("data/prog505a.txt", "r")
-per1 = file.readline(1)
-per2 = file.readline(2)
-per3 = file.readline(3)
-per4 = file.readline(4)
-per5 = file.readline(5)
+books = []
+with open("prog505a.txt", "r") as f:
+  for line in f:
+    books.append(int(line[-2]))
 
-for char in per1:
-  if char.isnumeric() == true:
-    books1 = char
+points = []
+for item in books:
+  if item <= 3:
+    points.append(item * 10)
+  elif item <= 6:
+    points.append(30 + ((item - 3) * 15))
+  else:
+    points.append(75 + ((item - 6) * 20))
+i = 0
+with open("prog505a.txt", "r+") as file:
+  for line in file:
+    line += ((" " + str(points[i])))
+    i += 1
 
-for char in per2:
-  if char.isnumeric() == true:
-    books2 = char
+sum = 0
+print(points)
+for i in range(0, 5):
+  sum += points[i]
+avg = sum/5
+print("Average points: ", avg)
 
-for char in per3:
-  if char.isnumeric() == true:
-    books3 = char
-
-for char in per4:
-  if char.isnumeric() == true:
-    books4 = char
-
-for char in per5:
-  if char.isnumeric() == true:
-    books5 = char
-
-def points(books):
-  out = 0
-  for i in range(0, books - 1):
-    if i <= 2:
-      out += 10
-    elif i <= 5:
-      out += 15
-    else:
-      out += 20
-    return out
-
+big = points[0]
+for item in points:
+  if item > big:
+    big = item
