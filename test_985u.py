@@ -23,9 +23,26 @@ class TestQuicksort(unittest.TestCase):
       Quicksort.sort(input)
       end_time = current_time()
       self.assertLess(end_time - start_time, 10)
-
-
-
+    def test_empty(self):
+      input = []
+      expected = []
+      self.assertEqual(Quicksort.sort(input),expected)
+    def test_single(self):
+      input = [1]
+      expected = [1]
+      self.assertEqual(Quicksort.sort(input),expected)
+    def test_identical(self):
+      input = [5,5,5,5]
+      expected = [5,5,5,5]
+      self.assertEqual(Quicksort.sort(input),expected)
+    def test_negative(self):
+      input = [-3,-1,-4,-2]
+      expected = [-4,-3,-2,-1]
+      self.assertEqual(Quicksort.sort(input),expected)
+    def test_float(self):
+      input = [3.2, 1.5, 4.8, 2.1]
+      expected = [1.5, 2.1, 3.2, 4.8]
+      self.assertEqual(Quicksort.sort(input),expected)
 def generate_large_list():
   return [random.randint(0, 10_000_000) for i in range(1_000_000)]
 if __name__ == '__main__':
