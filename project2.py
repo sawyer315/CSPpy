@@ -38,7 +38,7 @@ while ready == 0:
   elif command == "sort":
     grocery.sort()
   else:
-    print("Try again ")
+    print("Try again")
   print(grocery)
 for item in grocery:
   print(item)
