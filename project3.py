@@ -14,8 +14,10 @@ def switch(chose):
       elif completed[i] is True: completed[i] = False
 while edit == 1:
   while edit == 1:
-    if len(tasks) > 0: print('Current list: ',tasks)
-    editing = str(input("Add or remove a task? (Or type 'done'): "))
+    if len(tasks) > 0: 
+      for i in range(0, len(tasks)):
+        print(i+1, ': ', tasks[i])
+    editing = str(input("Add or remove a task? (Or type 'done,' 'sort,' or 'swap'): "))
     if editing == 'add':
       string = str(input('?: '))
       tasks.append(string)
