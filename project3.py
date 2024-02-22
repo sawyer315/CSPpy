@@ -1,9 +1,11 @@
 tasks = []
 edit = 1
 select = 0
+select2 = 0
 editing = ""
 string = ""
 completed = []
+temp = ''
 
 def switch(chose):
   for i in range(0, len(tasks)):
@@ -20,14 +22,24 @@ while edit == 1:
     elif editing == 'remove':
       select = int(input("What position?: "))
       tasks.pop(select-1)
-    elif editing == 'done':
-      edit = 0
-
+    elif editing == 'done': edit = 0
+    elif editing == 'sort': tasks.sort()
+    elif editing == 'swap':
+      if len(tasks) > 1:
+        select = int(input('What position?'))-1
+        temp = tasks[select]
+        select2 = int(input('Move to where?'))-1
+        tasks[select] = tasks[select2]
+        tasks[select2] = temp
+      else:
+        print('Add more tasks.')
+  completed = []
   while edit == 0:
     if completed == []: completed = [False] * len(tasks)
     for i in range(0, len(tasks)):
-      print(tasks[i],': ',completed[i])
-    editing = str(input("Complete which task? (0 to quit): "))
+      if completed[i] is True: print(tasks[i],': ','Done')
+      if completed[i] is False: print(tasks[i],': ','Not Done')
+    editing = str(input("Complete which task? (0 to quit, -1 to edit): "))
     if int(editing) == 0: edit = 2
     elif int(editing) == -1: edit = 1
     else: switch(editing)
