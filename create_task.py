@@ -71,12 +71,13 @@ def cpu_decide(type):
       return 'Co'
     else:
       temp = 0
+      print(past_player_moves)
       for item in past_player_moves:
         if item == 'Be': temp +=1
         temp += 1
-      if temp/turn == 1:
+      if temp/(turn-1) == 1:
         return 'Co'
-      if temp/turn == 2:
+      if temp/(turn-1) == 2:
         return 'Ct'
       else: 
         temp = random.randint(1,2)
@@ -99,9 +100,9 @@ def cpu_decide(type):
       return 'Co'
     else:
       if past_player_moves[-1] == 'Be' and past_player_moves[-2] == 'Be': return 'Be'
-      else: return 'Ct'
+      else: return 'Co'
   elif type == 'Wary':
-    if turn == 1:
+    if turn == 1 or turn == 2:
       return 'Co'
     else:
       if past_player_moves[-1] == 'Be' or past_player_moves[-2] == 'Be': return 'Ct'
@@ -114,13 +115,13 @@ def calc_rewards(p1, p2):
   elif p1 == 'Be' and p2 == 'Co': return T,S
   elif p1 == 'Co' and p2 == 'Ct': return R,S
   elif p1 == 'Ct' and p2 == 'Co': return S,R
-  elif p1 == 'Be' and p2 == 'Ct': return T,S
-  elif p1 == 'Ct' and p2 == 'Be': return S,T
+  elif p1 == 'Be' and p2 == 'Ct': return S,T
+  elif p1 == 'Ct' and p2 == 'Be': return T,S
   elif p1 == 'Ct' and p2 == 'Ct': return P,P
   else: return 0,0
  
 
-temp = random.randint(1,10)
+temp = random.randint(7,8)
 if temp == 1: cpu_type = 'Trusting'
 elif temp == 2: cpu_type = 'Distrustful'
 elif temp == 3: cpu_type = 'Random'
@@ -131,9 +132,7 @@ elif temp == 7: cpu_type = 'Grudge'
 elif temp == 8: cpu_type = 'Thinker'
 elif temp == 9: cpu_type = 'Generous'
 elif temp == 10: cpu_type = 'Wary'
-temp = input()
-if temp!= 0:
-  cpu_type = temp
+
 print(cpu_type)
 turn = 1
 for i in range(game_length):
@@ -143,9 +142,10 @@ for i in range(game_length):
   if player_move == 'Betray': player_move = 'Be'
   if player_move == 'Counter': player_move = 'Ct'
   cpu_move = cpu_decide(cpu_type)
+  print(cpu_move)
   if cpu_move == 'Be': print('CPU move: Betray')
-  if cpu_move == 'Co': print('CPU move: Cooperate')
-  if cpu_move == 'Ct': print('CPU move: Counter')
+  elif cpu_move == 'Co': print('CPU move: Cooperate')
+  elif cpu_move == 'Ct': print('CPU move: Counter')
   past_player_moves.append(player_move)
   past_cpu_moves.append(cpu_move)
   player_reward, cpu_reward = calc_rewards(player_move, cpu_move)
