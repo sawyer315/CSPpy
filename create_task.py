@@ -27,7 +27,8 @@ player_reward = 0
 cpu_reward = 0
 player_score = 0
 cpu_score = 0
-
+single_player = 0
+gamemode = input('Gamemode? ')
 def cpu_decide(type):
   if type == 'Trusting':
     return 'Co'
@@ -119,61 +120,108 @@ def calc_rewards(p1, p2):
   elif p1 == 'Ct' and p2 == 'Be': return T,S
   elif p1 == 'Ct' and p2 == 'Ct': return P,P
   else: return 0,0
- 
+if gamemode == 'Single':
+  temp = random.randint(1,10)
+  if temp == 1: cpu_type = 'Trusting'
+  elif temp == 2: cpu_type = 'Distrustful'
+  elif temp == 3: cpu_type = 'Random'
+  elif temp == 4: cpu_type = 'Copycat'
+  elif temp == 5: cpu_type = 'Opposite'
+  elif temp == 6: cpu_type = 'Alternate'
+  elif temp == 7: cpu_type = 'Grudge'
+  elif temp == 8: cpu_type = 'Thinker'
+  elif temp == 9: cpu_type = 'Generous'
+  elif temp == 10: cpu_type = 'Wary'
+  
+  print(cpu_type)
+  turn = 1
+  for i in range(game_length):
+    print('================================================')
+    player_move = str(input('Your move? (Cooperate/Betray/Counter) '))
+    if player_move == 'Cooperate': player_move = 'Co'
+    if player_move == 'Betray': player_move = 'Be'
+    if player_move == 'Counter': player_move = 'Ct'
+    cpu_move = cpu_decide(cpu_type)
+    print(cpu_move)
+    if cpu_move == 'Be': print('CPU move: Betray')
+    elif cpu_move == 'Co': print('CPU move: Cooperate')
+    elif cpu_move == 'Ct': print('CPU move: Counter')
+    past_player_moves.append(player_move)
+    past_cpu_moves.append(cpu_move)
+    player_reward, cpu_reward = calc_rewards(player_move, cpu_move)
+    player_score += player_reward
+    cpu_score += cpu_reward
+    if player_reward == R:
+      print('You were rewarded')
+    elif player_reward == P:
+      print('You were punished')
+    elif player_reward == S:
+      print('You lost')
+    elif player_reward == T:
+      print('You win')
+    if cpu_reward == R:
+      print('CPU was rewarded')
+    elif cpu_reward == P:
+      print('CPU was punished')
+    elif cpu_reward == S:
+      print('CPU lost')
+    elif cpu_reward == T:
+      print('CPU wins')
+    print('Current score:')
+    print('Player: ', player_score)
+    print('CPU score: ', cpu_score)
+    turn +=1
+  print('============================================')
+  print('GAME OVER')
+  if player_score>cpu_score: print('You win!')
+  elif player_score<cpu_score: print('You lose!')
+  elif player_score == cpu_score: print('Tie!')
+  print('Final score: ',player_score,', ',cpu_score)
 
-temp = random.randint(7,8)
-if temp == 1: cpu_type = 'Trusting'
-elif temp == 2: cpu_type = 'Distrustful'
-elif temp == 3: cpu_type = 'Random'
-elif temp == 4: cpu_type = 'Copycat'
-elif temp == 5: cpu_type = 'Opposite'
-elif temp == 6: cpu_type = 'Alternate'
-elif temp == 7: cpu_type = 'Grudge'
-elif temp == 8: cpu_type = 'Thinker'
-elif temp == 9: cpu_type = 'Generous'
-elif temp == 10: cpu_type = 'Wary'
 
-print(cpu_type)
-turn = 1
-for i in range(game_length):
-  print('================================================')
-  player_move = str(input('Your move? (Cooperate/Betray/Counter) '))
-  if player_move == 'Cooperate': player_move = 'Co'
-  if player_move == 'Betray': player_move = 'Be'
-  if player_move == 'Counter': player_move = 'Ct'
-  cpu_move = cpu_decide(cpu_type)
-  print(cpu_move)
-  if cpu_move == 'Be': print('CPU move: Betray')
-  elif cpu_move == 'Co': print('CPU move: Cooperate')
-  elif cpu_move == 'Ct': print('CPU move: Counter')
-  past_player_moves.append(player_move)
-  past_cpu_moves.append(cpu_move)
-  player_reward, cpu_reward = calc_rewards(player_move, cpu_move)
-  player_score += player_reward
-  cpu_score += cpu_reward
-  if player_reward == R:
-    print('You were rewarded')
-  elif player_reward == P:
-    print('You were punished')
-  elif player_reward == S:
-    print('You lost')
-  elif player_reward == T:
-    print('You win')
-  if cpu_reward == R:
-    print('CPU was rewarded')
-  elif cpu_reward == P:
-    print('CPU was punished')
-  elif cpu_reward == S:
-    print('CPU lost')
-  elif cpu_reward == T:
-    print('CPU wins')
-  print('Current score:')
-  print('Player: ', player_score)
-  print('CPU score: ', cpu_score)
-  turn +=1
-print('============================================')
-print('GAME OVER')
-if player_score>cpu_score: print('You win!')
-elif player_score<cpu_score: print('You lose!')
-elif player_score == cpu_score: print('Tie!')
-print('Final score: ',player_score,', ',cpu_score)
+elif gamemode == 'Simulate':
+  p1_type =
+  p2_type =
+  
+  for i in range(game_length):
+    print('================================================')
+    player_move = str(input('Your move? (Cooperate/Betray/Counter) '))
+    if player_move == 'Cooperate': player_move = 'Co'
+    if player_move == 'Betray': player_move = 'Be'
+    if player_move == 'Counter': player_move = 'Ct'
+    cpu_move = cpu_decide(cpu_type)
+    print(cpu_move)
+    if cpu_move == 'Be': print('CPU move: Betray')
+    elif cpu_move == 'Co': print('CPU move: Cooperate')
+    elif cpu_move == 'Ct': print('CPU move: Counter')
+    past_player_moves.append(player_move)
+    past_cpu_moves.append(cpu_move)
+    player_reward, cpu_reward = calc_rewards(player_move, cpu_move)
+    player_score += player_reward
+    cpu_score += cpu_reward
+    if player_reward == R:
+      print('You were rewarded')
+    elif player_reward == P:
+      print('You were punished')
+    elif player_reward == S:
+      print('You lost')
+    elif player_reward == T:
+      print('You win')
+    if cpu_reward == R:
+      print('CPU was rewarded')
+    elif cpu_reward == P:
+      print('CPU was punished')
+    elif cpu_reward == S:
+      print('CPU lost')
+    elif cpu_reward == T:
+      print('CPU wins')
+    print('Current score:')
+    print('Player: ', player_score)
+    print('CPU score: ', cpu_score)
+    turn +=1
+  print('============================================')
+  print('GAME OVER')
+  if player_score>cpu_score: print('You win!')
+  elif player_score<cpu_score: print('You lose!')
+  elif player_score == cpu_score: print('Tie!')
+  print('Final score: ',player_score,', ',cpu_score)
