@@ -30,24 +30,24 @@ cpu_score = 0
 single_player = 0
 gamemode = input('Gamemode? ')
 def cpu_decide(type, self, other):
-  if type == 'Trusting':
-    return 'Co'
-  elif type == 'Distrustful':
-    return 'Be'
-  elif type == 'Random':
+  if type == 1:
+    return 'Co'  #Trusting
+  elif type == 2:
+    return 'Be'#Distrustful
+  elif type == 3:
     temp = random.randint(1,3)
     if temp == 1: return 'Co'
     elif temp == 2: return 'Be'
-    else: return 'Ct'
-  elif type == 'Copycat':
+    else: return 'Ct'#Random
+  elif type == 4:
     if turn == 1:
       temp = random.randint(1,3)
       if temp == 1: return 'Co'
       elif temp == 2: return 'Be'
       else: return 'Ct'
     else:
-      return other[-1]
-  elif type == 'Opposite':
+      return other[-1]#Copycat
+  elif type == 5:
     if turn == 1:
       temp = random.randint(1,3)
       if temp == 1: return 'Co'
@@ -56,8 +56,8 @@ def cpu_decide(type, self, other):
     else:
       if other[-1] == 'Co': return 'Be'
       elif other[-1] == 'Be': return 'Ct'
-      else: return 'Co'
-  elif type == 'Alternate':
+      else: return 'Co'#Opposite
+  elif type == 6:
     if turn == 1:
       temp = random.randint(1,3)
       if temp == 1: return 'Co'
@@ -66,8 +66,8 @@ def cpu_decide(type, self, other):
     else: 
       if self[-1] == 'Co': return 'Be'
       elif self[-1] == 'Ct': return 'Co'
-      else: return 'Ct'
-  elif type == 'Grudge':
+      else: return 'Ct'#Alternate#Alternate
+  elif type == 7:
     if turn == 1:
       return 'Co'
     else:
@@ -82,8 +82,8 @@ def cpu_decide(type, self, other):
       else: 
         temp = random.randint(1,2)
         if temp == 1: return 'Be'
-        else: return 'Ct'
-  elif type == 'Thinker':
+        else: return 'Ct'#Grudge#Grudge
+  elif type == 8:
     if turn == 1:
       return 'Co'
     elif turn == 2:
@@ -93,19 +93,19 @@ def cpu_decide(type, self, other):
       if other[-1] == 'Co' and other[-2] == 'Co': return 'Be'
       elif other[-1] == 'Be' and other[-2] == 'Be': return 'Ct'
       elif other[-1] == 'Ct': return 'Co'
-      else: return other[-1]
-  elif type == 'Generous':
+      else: return other[-1]#Thinker
+  elif type == 9:
     if turn == 1 or turn == 2:
       return 'Co'
     else:
       if other[-1] == 'Be' and other[-2] == 'Be': return 'Ct'
-      else: return 'Co'
-  elif type == 'Wary':
+      else: return 'Co'#Generous
+  elif type == 10:
     if turn == 1 or turn == 2:
       return 'Co'
     else:
       if other[-1] == 'Be' or other[-2] == 'Be': return 'Ct'
-      else: return 'Be'
+      else: return 'Be'#Wary
   print(cpu_move)
 def calc_rewards(p1, p2):
   if p1 == 'Co' and p2 == 'Co': return R,R
@@ -120,16 +120,7 @@ def calc_rewards(p1, p2):
   else: return 0,0
 if gamemode == 'Single':
   temp = random.randint(1,10)
-  if temp == 1: cpu_type = 'Trusting'
-  elif temp == 2: cpu_type = 'Distrustful'
-  elif temp == 3: cpu_type = 'Random'
-  elif temp == 4: cpu_type = 'Copycat'
-  elif temp == 5: cpu_type = 'Opposite'
-  elif temp == 6: cpu_type = 'Alternate'
-  elif temp == 7: cpu_type = 'Grudge'
-  elif temp == 8: cpu_type = 'Thinker'
-  elif temp == 9: cpu_type = 'Generous'
-  elif temp == 10: cpu_type = 'Wary'
+  cpu_type = temp
   
   print(cpu_type)
   turn = 1
@@ -183,11 +174,13 @@ elif gamemode == 'Simulate':
   type1_score,type2_score,type3_score,type4_score,type5_score,type6_score,type7_score,type8_score,type9_score,type10_score = 0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
   
 
-  for i in range(99):
+  for i in range(100):
     p1_type +=1
     if p1_type == 11:
       p1_type = 1
       p2_type+=1
+   
+      
     for i in range(game_length):
       print('================================================')
       player_move = cpu_decide(p1_type,past_player_moves,past_cpu_moves)
@@ -203,6 +196,7 @@ elif gamemode == 'Simulate':
       turn +=1
     print('============================================')
     print('GAME OVER')
+    print('p1: ', p1_type, ', p2 ', p2_type)
     if player_score>cpu_score:
       if p1_type == 1: type1_score +=1
       elif p1_type == 2: type2_score +=1
@@ -246,8 +240,15 @@ elif gamemode == 'Simulate':
       elif p2_type == 8: type8_score +=.5
       elif p2_type == 9: type9_score +=.5
       elif p2_type ==10:type10_score +=.5
-print('Trusting: ', type1_score)
-print('Distrusting: ', type2_score)
-print('Random', type3_score)
-print('Copycat', type4_score)
-print('Opposite', type5_score)
+    player_score = 0
+    cpu_score = 0
+  print('Trusting: ', type1_score)
+  print('Distrusting: ', type2_score)
+  print('Random: ', type3_score)
+  print('Copycat:', type4_score)
+  print('Opposite: ', type5_score)
+  print('Alternate:', type6_score)
+  print('Grudge:', type7_score)
+  print('Thinker: ', type8_score)
+  print('Generous: ', type9_score)
+  print('Wary: ', type10_score)
