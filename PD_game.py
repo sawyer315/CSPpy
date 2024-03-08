@@ -28,6 +28,8 @@ cpu_reward = 0
 player_score = 0
 cpu_score = 0
 single_player = 0
+sets = 0
+temp_sum = 0.0
 gamemode = input('Gamemode? ')
 def cpu_decide(type, self, other):
   if type == 1:
@@ -171,84 +173,146 @@ if gamemode == 'Single':
 elif gamemode == 'Simulate':
   p1_type = 0
   p2_type = 1
+  sets = int(input('How many sets of 100 games? '))
   type1_score,type2_score,type3_score,type4_score,type5_score,type6_score,type7_score,type8_score,type9_score,type10_score = 0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-  
+  type1_set,type2_set,type3_set,type4_set,type5_set,type6_set,type7_set,type8_set,type9_set,type10_set = [],[],[],[],[],[],[],[],[],[]
 
-  for i in range(100):
-    p1_type +=1
-    if p1_type == 11:
-      p1_type = 1
-      p2_type+=1
-   
-      
-    for i in range(game_length):
-      print('================================================')
-      player_move = cpu_decide(p1_type,past_player_moves,past_cpu_moves)
-      cpu_move = cpu_decide(p2_type,past_cpu_moves,past_player_moves)
-      past_player_moves.append(player_move)
-      past_cpu_moves.append(cpu_move)
-      player_reward, cpu_reward = calc_rewards(player_move, cpu_move)
-      player_score += player_reward
-      cpu_score += cpu_reward
-      print(player_reward,' ',cpu_reward,' ',player_move,' ',cpu_move)
-      print('Player: ', player_score)
-      print('CPU score: ', cpu_score)
-      turn +=1
-    print('============================================')
-    print('GAME OVER')
-    print('p1: ', p1_type, ', p2 ', p2_type)
-    if player_score>cpu_score:
-      if p1_type == 1: type1_score +=1
-      elif p1_type == 2: type2_score +=1
-      elif p1_type == 3: type3_score +=1
-      elif p1_type == 4: type4_score +=1
-      elif p1_type == 5: type5_score +=1
-      elif p1_type == 6: type6_score +=1
-      elif p1_type == 7: type7_score +=1
-      elif p1_type == 8: type8_score +=1
-      elif p1_type == 9: type9_score +=1
-      elif p1_type == 10: type10_score +=1
-    elif cpu_score>player_score:
-      if p2_type  ==  1: type1_score +=1
-      elif p2_type == 2: type2_score +=1
-      elif p2_type == 3: type3_score +=1
-      elif p2_type == 4: type4_score +=1
-      elif p2_type == 5: type5_score +=1
-      elif p2_type == 6: type6_score +=1
-      elif p2_type == 7: type7_score +=1
-      elif p2_type == 8: type8_score +=1
-      elif p2_type == 9: type9_score +=1
-      elif p2_type ==10:type10_score +=1
-    else: 
-      if p1_type == 1: type1_score +=0.5
-      elif p1_type == 2: type2_score +=.5
-      elif p1_type == 3: type3_score +=.5
-      elif p1_type == 4: type4_score +=.5
-      elif p1_type == 5: type5_score +=.5
-      elif p1_type == 6: type6_score +=.5
-      elif p1_type == 7: type7_score +=.5
-      elif p1_type == 8: type8_score +=.5
-      elif p1_type == 9: type9_score +=.5
-      elif p1_type == 10: type10_score +=.5
-      if p2_type  ==  1: type1_score +=.5
-      elif p2_type == 2: type2_score +=.5
-      elif p2_type == 3: type3_score +=.5
-      elif p2_type == 4: type4_score +=.5
-      elif p2_type == 5: type5_score +=.5
-      elif p2_type == 6: type6_score +=.5
-      elif p2_type == 7: type7_score +=.5
-      elif p2_type == 8: type8_score +=.5
-      elif p2_type == 9: type9_score +=.5
-      elif p2_type ==10:type10_score +=.5
-    player_score = 0
-    cpu_score = 0
-  print('Trusting: ', type1_score)
-  print('Distrusting: ', type2_score)
-  print('Random: ', type3_score)
-  print('Copycat:', type4_score)
-  print('Opposite: ', type5_score)
-  print('Alternate:', type6_score)
-  print('Grudge:', type7_score)
-  print('Thinker: ', type8_score)
-  print('Generous: ', type9_score)
-  print('Wary: ', type10_score)
+  for i in range(sets):
+    for i in range(100):
+      p1_type +=1
+      if p1_type == 11:
+        p1_type = 1
+        p2_type+=1
+      for i in range(game_length):
+        print('================================================')
+        player_move = cpu_decide(p1_type,past_player_moves,past_cpu_moves)
+        cpu_move = cpu_decide(p2_type,past_cpu_moves,past_player_moves)
+        past_player_moves.append(player_move)
+        past_cpu_moves.append(cpu_move)
+        player_reward, cpu_reward = calc_rewards(player_move, cpu_move)
+        player_score += player_reward
+        cpu_score += cpu_reward
+        print(player_reward,' ',cpu_reward,' ',player_move,' ',cpu_move)
+        print('Player: ', player_score)
+        print('CPU score: ', cpu_score)
+        turn +=1
+      print('============================================')
+      print('GAME OVER')
+      print('p1: ', p1_type, ', p2 ', p2_type)
+      if player_score>cpu_score:
+        if p1_type == 1: type1_score +=1
+        elif p1_type == 2: type2_score +=1
+        elif p1_type == 3: type3_score +=1
+        elif p1_type == 4: type4_score +=1
+        elif p1_type == 5: type5_score +=1
+        elif p1_type == 6: type6_score +=1
+        elif p1_type == 7: type7_score +=1
+        elif p1_type == 8: type8_score +=1
+        elif p1_type == 9: type9_score +=1
+        elif p1_type == 10: type10_score +=1
+      elif cpu_score>player_score:
+        if p2_type  ==  1: type1_score +=1
+        elif p2_type == 2: type2_score +=1
+        elif p2_type == 3: type3_score +=1
+        elif p2_type == 4: type4_score +=1
+        elif p2_type == 5: type5_score +=1
+        elif p2_type == 6: type6_score +=1
+        elif p2_type == 7: type7_score +=1
+        elif p2_type == 8: type8_score +=1
+        elif p2_type == 9: type9_score +=1
+        elif p2_type ==10:type10_score +=1
+      else: 
+        if p1_type == 1: type1_score +=0.5
+        elif p1_type == 2: type2_score +=.5
+        elif p1_type == 3: type3_score +=.5
+        elif p1_type == 4: type4_score +=.5
+        elif p1_type == 5: type5_score +=.5
+        elif p1_type == 6: type6_score +=.5
+        elif p1_type == 7: type7_score +=.5
+        elif p1_type == 8: type8_score +=.5
+        elif p1_type == 9: type9_score +=.5
+        elif p1_type == 10: type10_score +=.5
+        if p2_type  ==  1: type1_score +=.5
+        elif p2_type == 2: type2_score +=.5
+        elif p2_type == 3: type3_score +=.5
+        elif p2_type == 4: type4_score +=.5
+        elif p2_type == 5: type5_score +=.5
+        elif p2_type == 6: type6_score +=.5
+        elif p2_type == 7: type7_score +=.5
+        elif p2_type == 8: type8_score +=.5
+        elif p2_type == 9: type9_score +=.5
+        elif p2_type ==10:type10_score +=.5
+      player_score = 0
+      cpu_score = 0
+    
+    type1_set.append(type1_score)
+    type2_set.append(type2_score)
+    type3_set.append(type3_score)
+    type4_set.append(type4_score)
+    type5_set.append(type5_score)
+    type6_set.append(type6_score)
+    type7_set.append(type7_score)
+    type8_set.append(type8_score)
+    type9_set.append(type9_score)
+    type10_set.append(type10_score)
+    type1_score,type2_score,type3_score,type4_score,type5_score,type6_score,type7_score,type8_score,type9_score,type10_score = 0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+    p1_type, p2_type = 0,1
+  print(" ")
+  for item in type1_set:
+    temp_sum += item
+  temp_sum = temp_sum / sets
+  print('Trusting Avg. ', temp_sum)
+  temp_sum = 0
+  
+  for item in type2_set:
+    temp_sum += item
+  temp_sum = temp_sum / sets
+  print('Distrusting Avg. ', temp_sum)
+  temp_sum = 0
+  
+  for item in type3_set:
+    temp_sum += item
+  temp_sum = temp_sum / sets
+  print('Random Avg. ', temp_sum)
+  temp_sum = 0
+
+  for item in type4_set:
+    temp_sum += item
+  temp_sum = temp_sum / sets
+  print('Copycat Avg. ', temp_sum)
+  temp_sum = 0
+
+  for item in type5_set:
+    temp_sum += item
+  temp_sum = temp_sum / sets
+  print('Opposite Avg. ', temp_sum)
+  temp_sum = 0
+
+  for item in type6_set:
+    temp_sum += item
+  temp_sum = temp_sum / sets
+  print('Alternate Avg. ', temp_sum)
+  temp_sum = 0
+
+  for item in type7_set:
+    temp_sum += item
+  temp_sum = temp_sum / sets
+  print('Grudge Avg. ', temp_sum)
+  temp_sum = 0
+
+  for item in type8_set:
+    temp_sum += item
+  temp_sum = temp_sum / sets
+  print('Thinker Avg. ', temp_sum)
+  temp_sum = 0
+
+  for item in type9_set:
+    temp_sum += item
+  temp_sum = temp_sum / sets
+  print('Generous Avg. ', temp_sum)
+  temp_sum = 0
+
+  for item in type10_set:
+    temp_sum += item
+  temp_sum = temp_sum / sets
+  print('Wary Avg. ', temp_sum)
