@@ -108,7 +108,6 @@ def cpu_decide(type, self, other):
     else:
       if other[-1] == 'Be' or other[-2] == 'Be': return 'Ct'
       else: return 'Be'#Wary
-  print(cpu_move)
 def calc_rewards(p1, p2):
   if p1 == 'Co' and p2 == 'Co': return R,R
   elif p1 =='Be' and  p2 == 'Be': return P,P
@@ -123,8 +122,6 @@ def calc_rewards(p1, p2):
 if gamemode == 'Single':
   temp = random.randint(1,10)
   cpu_type = temp
-  
-  print(cpu_type)
   turn = 1
   for i in range(game_length):
     print('================================================')
@@ -162,13 +159,13 @@ if gamemode == 'Single':
     print('Player: ', player_score)
     print('CPU score: ', cpu_score)
     turn +=1
-  print('============================================')
+  print('================================================')
   print('GAME OVER')
   if player_score>cpu_score: print('You win!')
   elif player_score<cpu_score: print('You lose!')
   elif player_score == cpu_score: print('Tie!')
   print('Final score: ',player_score,', ',cpu_score)
-
+  print('CPU type: ', cpu_type)
 
 elif gamemode == 'Simulate':
   p1_type = 0
@@ -183,6 +180,8 @@ elif gamemode == 'Simulate':
       if p1_type == 11:
         p1_type = 1
         p2_type+=1
+      past_player_moves, past_cpu_moves = [],[]
+      turn = 1
       for i in range(game_length):
         print('================================================')
         player_move = cpu_decide(p1_type,past_player_moves,past_cpu_moves)
@@ -196,7 +195,7 @@ elif gamemode == 'Simulate':
         print('Player: ', player_score)
         print('CPU score: ', cpu_score)
         turn +=1
-      print('============================================')
+      print('================================================')
       print('GAME OVER')
       print('p1: ', p1_type, ', p2 ', p2_type)
       if player_score>cpu_score:
@@ -316,3 +315,7 @@ elif gamemode == 'Simulate':
     temp_sum += item
   temp_sum = temp_sum / sets
   print('Wary Avg. ', temp_sum)
+  print('')
+  print('Scoring: ', R, ', ', T, ', ', S, ', ', P)
+  print('Game length: ', game_length)
+  print('Sets of 100 games: ', sets)
