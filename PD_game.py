@@ -30,14 +30,14 @@ temp_sum = 0.0
 gamemode = input('Gamemode? (Single, Simulate)')
 def cpu_decide(type, self, other):
   if type == 1:
-    return 'Co'  #Trusting
+    return 'Co' 
   elif type == 2:
-    return 'Be'#Distrustful
+    return 'Be'
   elif type == 3:
     temp = random.randint(1,3)
     if temp == 1: return 'Co'
     elif temp == 2: return 'Be'
-    else: return 'Ct'#Random
+    else: return 'Ct'
   elif type == 4:
     if turn == 1:
       temp = random.randint(1,3)
@@ -45,7 +45,7 @@ def cpu_decide(type, self, other):
       elif temp == 2: return 'Be'
       else: return 'Ct'
     else:
-      return other[-1]#Copycat
+      return other[-1]
   elif type == 5:
     if turn == 1:
       temp = random.randint(1,3)
@@ -65,7 +65,7 @@ def cpu_decide(type, self, other):
     else: 
       if self[-1] == 'Co': return 'Be'
       elif self[-1] == 'Ct': return 'Co'
-      else: return 'Ct'#Alternate#Alternate
+      else: return 'Ct'
   elif type == 7:
     if turn == 1:
       return 'Co'
@@ -92,19 +92,19 @@ def cpu_decide(type, self, other):
       if other[-1] == 'Co' and other[-2] == 'Co': return 'Be'
       elif other[-1] == 'Be' and other[-2] == 'Be': return 'Ct'
       elif other[-1] == 'Ct': return 'Co'
-      else: return other[-1]#Thinker
+      else: return other[-1]
   elif type == 9:
     if turn == 1 or turn == 2:
       return 'Co'
     else:
       if other[-1] == 'Be' and other[-2] == 'Be': return 'Ct'
-      else: return 'Co'#Generous
+      else: return 'Co'
   elif type == 10:
     if turn == 1 or turn == 2:
       return 'Co'
     else:
       if other[-1] == 'Be' or other[-2] == 'Be': return 'Ct'
-      else: return 'Be'#Wary
+      else: return 'Be'
 def calc_rewards(p1, p2):
   if p1 == 'Co' and p2 == 'Co': return R,R
   elif p1 =='Be' and  p2 == 'Be': return P,P
@@ -168,8 +168,10 @@ elif gamemode == 'Simulate':
   p1_type = 0
   p2_type = 1
   sets = int(input('How many sets of 100 games? '))
-  type1_score,type2_score,type3_score,type4_score,type5_score,type6_score,type7_score,type8_score,type9_score,type10_score = 0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-  type1_set,type2_set,type3_set,type4_set,type5_set,type6_set,type7_set,type8_set,type9_set,type10_set = [],[],[],[],[],[],[],[],[],[]
+  type1_score,type2_score,type3_score,type4_score,type5_score =0,0,0,0,0
+  type6_score,type7_score,type8_score,type9_score,type10_score = 0,0,0,0,0
+  type1_set,type2_set,type3_set,type4_set,type5_set = [],[],[],[],[]
+  type6_set,type7_set,type8_set,type9_set,type10_set = [],[],[],[],[]
 
   for i in range(sets):
     for i in range(100):
@@ -240,7 +242,6 @@ elif gamemode == 'Simulate':
         elif p2_type ==10:type10_score +=.5
       player_score = 0
       cpu_score = 0
-    
     type1_set.append(type1_score)
     type2_set.append(type2_score)
     type3_set.append(type3_score)
@@ -251,7 +252,8 @@ elif gamemode == 'Simulate':
     type8_set.append(type8_score)
     type9_set.append(type9_score)
     type10_set.append(type10_score)
-    type1_score,type2_score,type3_score,type4_score,type5_score,type6_score,type7_score,type8_score,type9_score,type10_score = 0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+    type1_score,type2_score,type3_score,type4_score,type5_score = 0,0,0,0,0
+    type6_score,type7_score,type8_score,type9_score,type10_score = 0,0,0,0,0
     p1_type, p2_type = 0,1
   print(" ")
   for item in type1_set:
