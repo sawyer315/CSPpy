@@ -4,10 +4,7 @@ cpu_move = ''
 past_player_moves = []
 past_cpu_moves = []
 cpu_type = ''
-R = 0
-T = 0
-S = 0
-P = 0
+R,T,S,P = 0,0,0,0
 game_length = int(input('Length of a game? '))
 settings = str(input('Rules: Standard, Cooperative, Uncooperative, Simple, Even? '))
 if settings == 'Standard':
@@ -30,7 +27,7 @@ cpu_score = 0
 single_player = 0
 sets = 0
 temp_sum = 0.0
-gamemode = input('Gamemode? ')
+gamemode = input('Gamemode? (Single, Simulate)')
 def cpu_decide(type, self, other):
   if type == 1:
     return 'Co'  #Trusting
@@ -58,7 +55,7 @@ def cpu_decide(type, self, other):
     else:
       if other[-1] == 'Co': return 'Be'
       elif other[-1] == 'Be': return 'Ct'
-      else: return 'Co'#Opposite
+      else: return 'Co'
   elif type == 6:
     if turn == 1:
       temp = random.randint(1,3)
@@ -84,7 +81,7 @@ def cpu_decide(type, self, other):
       else: 
         temp = random.randint(1,2)
         if temp == 1: return 'Be'
-        else: return 'Ct'#Grudge#Grudge
+        else: return 'Ct'
   elif type == 8:
     if turn == 1:
       return 'Co'
@@ -316,6 +313,6 @@ elif gamemode == 'Simulate':
   temp_sum = temp_sum / sets
   print('Wary Avg. ', temp_sum)
   print('')
-  print('Scoring: ', R, ', ', T, ', ', S, ', ', P)
-  print('Game length: ', game_length)
-  print('Sets of 100 games: ', sets)
+  print('Scoring: ', R, ',', T, ',', S, ',', P)
+  print('Game length:', game_length)
+  print('Sets of 100 games:', sets)
